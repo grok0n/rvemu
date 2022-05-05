@@ -1,5 +1,8 @@
 // The dram module that defines the Dram class for dram access
+#include <cstdint>
+#include <vector>
 
+const uint64_t DRAM_BASE = 0x8000'0000;
 const uint64_t DRAM_SIZE = 1024 * 1024 * 128;
 
 class Dram

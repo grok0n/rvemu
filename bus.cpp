@@ -3,8 +3,8 @@
 
 // Create a new instance of Bus.
 Bus::Bus (const std::vector<uint8_t>& binary)
+	: dram (binary)
 {
-	dram = Dram (code);
 }
 
 // Load data unto system bus
@@ -16,7 +16,6 @@ uint64_t Bus::load (uint64_t addr, uint64_t size)
 		return dram.load (addr, size);
 	}
 
-	throw std::exception ();
 	// TODO: Handle the error.
 }
 

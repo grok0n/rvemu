@@ -1,7 +1,7 @@
 /// The bus module contains the sytem bus which accesses the main memory and other peripherals.
+#include "dram.h"
 
 // The address which DRAM stars, (same as QEMU virt machine).
-const uint64_t DRAM_BASE = 0x8000'0000;
 
 // The system bus.
 class Bus

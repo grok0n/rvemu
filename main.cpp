@@ -1,9 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <cstdint>
-
-#include <vector>
 
 #include "cpu.h"
 

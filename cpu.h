@@ -1,4 +1,5 @@
 // The Cpu module definition
+#include "bus.h"
 
 class Cpu 
 {
@@ -44,5 +45,66 @@ class Cpu
 
 		// Execute an instruction after decoding. Return true if an error occurs, else return false.
 		void execute (uint64_t instr);
-};
 
+		// RV64I Instructions
+		/// CPU Load instuctions.
+		void instr_lb ();
+		void instr_lh ();
+		void instr_lw ();
+		void instr_ld ();
+		void instr_lbu ();
+		void instr_lhu ();
+		void instr_lwu ();
+
+		/// Integer register-immediate instructions.
+		void instr_addi ();
+		void instr_slli ();
+		void instr_slti ();
+		void instr_sltiu ();
+		void instr_xori ();
+		void instr_srli ();
+		void instr_srai ();
+		void instr_ori ();
+		void instr_andi ();
+		void instr_auipc ();
+		void instr_lui ();
+		void instr_addiw ();
+		void instr_slliw ();
+		void instr_srliw ();
+		void instr_sraiw ();
+
+		/// Memory store instructions.
+		void instr_sb ();
+		void instr_sh ();
+		void instr_sw ();
+		void instr_sd ();
+
+		/// Integer register-register instructions.
+		void instr_add ();
+		void instr_sub ();
+		void instr_sll ();
+		void instr_slt ();
+		void instr_sltu ();
+		void instr_xor ();
+		void instr_srl ();
+		void instr_sra ();
+		void instr_or ();
+		void instr_and ();
+		void instr_addw ();
+		void instr_subw ();
+		void instr_sllw ();
+		void instr_srlw ();
+		void instr_sraw ();
+
+		// Conditional branch operations.
+		void instr_beq ();
+		void instr_bne ();
+		void instr_blt ();
+		void instr_bge ();
+		void instr_bltu ();
+		void instr_bgeu ();
+
+		// Unconditional jumps.
+		void instr_jalr ();
+		void instr_jal ();
+};

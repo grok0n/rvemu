@@ -1,10 +1,11 @@
 // The implementation of the Dram class
+#include "dram.h"
 
 Dram::Dram (const std::vector<uint8_t>& binary)
 {
-	for (int i=0;i<code.size();i++)
+	for (int i=0;i<binary.size();i++)
 	{
-		dram[i] = code[i];
+		dram[i] = binary[i];
 	}
 }
 
@@ -13,17 +14,10 @@ uint64_t Dram::load (uint64_t addr, uint64_t size)
 {
 	switch (size)
 	{
-		case 8: 
-			return load8 (addr);
-		case 16:
-			return load16 (addr);
-		case 32:
-			return load32 (addr);
-		case 64:
-			return load64 (addr);
-		default:
-			// TODO: Handle the error.
-			return 0x0000'0000;
+		case 8: return load8 (addr);
+		case 16: return load16 (addr);
+		case 32: return load32 (addr);
+		case 64: return load64 (addr);
 	}
 }
 
@@ -32,16 +26,10 @@ void Dram::store (uint64_t addr, uint64_t size, uint64_t value)
 {
 	switch (size)
 	{
-		case 8: 
-			store8 (addr, value);
-		case 16:
-			store16 (addr, value);
-		case 32:
-			store32 (addr, value);
-		case 64:
-			store64 (addr, value);
-		default:
-			// TODO: Handle the error.
+		case 8: store8 (addr, value); break;
+		case 16: store16 (addr, value); break;
+		case 32: store32 (addr, value); break;
+		case 64: store64 (addr, value); break;
 	}
 }
 
