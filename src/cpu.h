@@ -47,7 +47,7 @@ class Cpu
 		void execute (uint64_t instr);
 
 		// RV64I Instructions
-		/// CPU Load instuctions.
+		/// Load instuctions.
 		void instr_lb ();
 		void instr_lh ();
 		void instr_lw ();

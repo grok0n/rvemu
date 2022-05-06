@@ -45,7 +45,259 @@ uint64_t Cpu::fetch ()
 	return bus.load (pc, 32);
 	// TODO: Handle errors
 }
- 
+
+// Load instructions.
+void Cpu::instr_lb ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int8_t) load (l_s_addr, 8)));
+}
+
+void Cpu::instr_lh ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int16_t) load (l_s_addr, 16)));
+}
+
+void Cpu::instr_lw ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) load (l_s_addr, 32)));
+} 
+
+void Cpu::instr_ld ()
+{
+	xreg[rd] = load (l_s_addr, 64);
+}
+
+void Cpu::instr_lbu ()
+{
+	xreg[rd] = load (l_s_addr, 8);
+}
+
+void Cpu::instr_lhu ()
+{
+	xreg[rd] = load (l_s_addr, 16);
+}
+
+void Cpu::instr_lwu ()
+{
+	xreg[rd] = load (l_s_addr, 32);
+}
+
+// Integer register-immediate instructions.
+void Cpu::instr_addi ()
+{
+	xreg[rd] = xreg[rs1] + imm;
+}
+
+
+void Cpu::instr_slli ()
+{
+	xreg[rd] = xreg[rs1] << shamt;
+}
+
+void Cpu::instr_slti ()
+{
+	xreg[rd] = (((int64_t) xreg[rs1]) < ((int64_t) imm)) ? 1 : 0;
+}
+
+void Cpu::instr_sltiu ()
+{
+	xreg[rd] = (xreg[rs1] < imm) ? 1 : 0;
+}
+
+void Cpu::instr_xori ()
+{
+	xreg[rd] = xreg[rs1] ^ imm;
+}
+
+void Cpu::instr_srli ()
+{
+	xreg[rd] = xreg[rs1] >> shamt;
+}
+
+void Cpu::instr_srai ()
+{
+	xreg[rd] = (uint64_t) (((int64_t) xreg[rs1]) >> shamt);
+}
+
+void Cpu::instr_ori ()
+{
+	xreg[rd] = xreg[rs1] | imm;
+}
+
+void Cpu::instr_andi ()
+{
+	xreg[rd] = xreg[rs1] & imm;
+}
+
+void Cpu::instr_auipc ()
+{
+	xreg[rd] = (pc - imm) + 4;
+}
+
+void Cpu::instr_lui ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (instr & 0xfffff000)));
+}
+
+void Cpu::instr_addiw ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (xreg[rs1] + imm)))
+}
+
+void Cpu::instr_slliw ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (xreg[rs1] << shamt)));
+}
+
+void Cpu::instr_srliw ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (((uint32_t) xreg[rs1]) >> shamt)));
+}
+
+void Cpu::instr_sraiw ()
+{
+	xreg[rd] = (uint64_t) ((int64_t) (((int32_t) xreg[rs1]) >> shamt));
+}
+
+// Memory store instructions.
+void Cpu::instr_sb ()
+{
+	store (l_s_addr, 8, xreg[rs2]);
+}
+
+void Cpu::instr_sh ()
+{
+	store (l_s_addr, 16, xreg[rs2]);
+}
+
+void Cpu::instr_sw ()
+{
+	store (l_s_addr, 32, xreg[rs2]);
+}
+
+void Cpu::instr_sd ()
+{
+	store (l_s_addr, 64, xreg[rs2]);
+}
+
+// Integer register-register instructions.
+void Cpu::instr_add ()
+{
+	xreg[rd] = (uint64_t) (((int64_t) xreg[rs1]) + ((int64_t) xreg[rs1]));
+}
+
+void Cpu::instr_sub ()
+{
+
+}
+
+void Cpu::instr_sll ()
+{
+
+}
+
+void Cpu::instr_slt ()
+{
+
+}
+
+void Cpu::instr_sltu ()
+{
+
+}
+
+void Cpu::instr_xor ()
+{
+
+}
+
+void Cpu::instr_srl ()
+{
+
+}
+
+void Cpu::instr_sra ()
+{
+
+}
+
+void Cpu::instr_or ()
+{
+
+}
+
+void Cpu::instr_and ()
+{
+
+}
+
+void Cpu::instr_addw ()
+{
+
+}
+
+void Cpu::instr_subw ()
+{
+
+}
+
+void Cpu::instr_sllw ()
+{
+
+}
+
+void Cpu::instr_srlw ()
+{
+
+}
+
+void Cpu::instr_sraw ()
+{
+
+}
+
+// Conditional branch operations.
+void Cpu::instr_beq ()
+{
+
+}
+
+void Cpu::instr_bne ()
+{
+
+}
+
+void Cpu::instr_blt ()
+{
+
+}
+
+void Cpu::instr_bge ()
+{
+
+}
+
+void Cpu::instr_bltu ()
+{
+
+}
+
+void Cpu::instr_bgeu ()
+{
+
+}
+
+// Unconditional jumps.
+void Cpu::instr_jalr ()
+{
+
+}
+
+void Cpu::instr_jal ()
+{
+
+}
+
 // Execute an instruction after decoding. Return true if an error occurs, else return false.
 void Cpu::execute (uint64_t instr)
 {
