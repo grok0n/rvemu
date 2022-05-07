@@ -136,12 +136,12 @@ void Cpu::instr_auipc ()
 
 void Cpu::instr_lui ()
 {
-	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (instr & 0xfffff000)));
+	xreg[rd] = imm;
 }
 
 void Cpu::instr_addiw ()
 {
-	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (xreg[rs1] + imm)))
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (xreg[rs1] + imm)));
 }
 
 void Cpu::instr_slliw ()
@@ -188,114 +188,115 @@ void Cpu::instr_add ()
 
 void Cpu::instr_sub ()
 {
-
+	xreg[rd] = (uint64_t) (((int64_t) xreg[rs1]) - ((int64_t) xreg[rs2]));
 }
 
 void Cpu::instr_sll ()
 {
-
+	xreg[rd] = xreg[rs1] << shamt;
 }
 
 void Cpu::instr_slt ()
 {
-
+	xreg[rd] = (((int64_t) xreg[rs1]) < ((int64_t) xreg[rs2])) ? 1 : 0;
 }
 
 void Cpu::instr_sltu ()
 {
-
+	xreg[rd] = (xreg[rs1] < xreg[rs2]) ? 1 : 0;
 }
 
 void Cpu::instr_xor ()
 {
-
+	xreg[rd] = xreg[rs1] ^ xreg[rs2];
 }
 
 void Cpu::instr_srl ()
 {
-
+	xreg[rd] = xreg[rs1] >> shamt;
 }
 
 void Cpu::instr_sra ()
 {
-
+	xreg[rd] = (uint64_t) (((int64_t) xreg[rs1]) >> shamt);
 }
 
 void Cpu::instr_or ()
 {
-
+	xreg[rd] = xreg[rs1] | xreg[rs2];
 }
 
 void Cpu::instr_and ()
 {
-
+	xreg[rd] = xreg[rs1] & xreg[rs2];
 }
 
 void Cpu::instr_addw ()
 {
-
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (xreg[rs1] + xreg[rs2])));
 }
 
 void Cpu::instr_subw ()
 {
-
+	xreg[rd] = (uint64_t) ((int64_t) ((int32_t) (xreg[rs1] - xreg[rs2])));
 }
 
 void Cpu::instr_sllw ()
 {
-
+	xreg[rd] = (uint64_t) ((int32_t) (((uint32_t) xreg[rs1]) << shamt));
 }
 
 void Cpu::instr_srlw ()
 {
-
+	xreg[rd] = (uint64_t) ((int32_t) (((uint32_t) xreg[rs1]) >> shamt));
 }
 
 void Cpu::instr_sraw ()
 {
-
+	xreg[rd] = (uint64_t) (((int32_t) xreg[rs1]) >> ((int32_t) shamt));
 }
 
 // Conditional branch operations.
 void Cpu::instr_beq ()
 {
-
+	if (xreg[rs1] == xreg[rs2]) pc = (pc + imm) - 4;
 }
 
 void Cpu::instr_bne ()
 {
-
+	if (xreg[rs1] != xreg[rs2]) pc = (pc + imm) - 4;
 }
 
 void Cpu::instr_blt ()
 {
-
+	if (((int64_t) xreg[rs1]) < ((int64_t) xreg[rs2])) pc = (pc + imm) - 4;
 }
 
 void Cpu::instr_bge ()
 {
 
+	if (((int64_t) xreg[rs1]) >= ((int64_t) xreg[rs2])) pc = (pc + imm) - 4;
 }
 
 void Cpu::instr_bltu ()
 {
-
+	if (xreg[rs1] < xreg[rs2]) pc = (pc + imm) - 4;
 }
 
 void Cpu::instr_bgeu ()
 {
-
+	if (xreg[rs1] >= xreg[rs2]) pc = (pc + imm) - 4;
 }
 
 // Unconditional jumps.
 void Cpu::instr_jalr ()
 {
-
+	pc = (xreg[rs1] + imm) & !1;
 }
 
 void Cpu::instr_jal ()
 {
-
+	pc = (pc + imm) - 4;
 }
 
 // Execute an instruction after decoding. Return true if an error occurs, else return false.
@@ -429,6 +430,7 @@ void Cpu::execute (uint64_t instr)
 			}
 			break;
 		case 0x37:
+			imm = (uint64_t) ((int64_t) ((int32_t) (instr & 0xfffff000)));
 			instr_lui ();
 			break;
 		case 0x3b:
