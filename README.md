@@ -1,2 +1,2 @@
 # rvemu
-RISC-V emulator for CLI written in C++. Inspired by [](https://github.com/d0iasm/rvemu)
+RISC-V emulator for CLI written in C++. Inspired by [https://github.com/d0iasm/rvemu](https://github.com/d0iasm/rvemu)
